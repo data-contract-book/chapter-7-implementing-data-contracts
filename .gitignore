@@ -1,0 +1,24 @@
+# macOS system files
+.DS_Store
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual-envs
+env/
+venv/
+.venv/
+
+# Logs, profiling, misc
+*.log
+
+# Docker / container dev
+.env
+.env.*
+
+# IDEs & editors
+.vscode/

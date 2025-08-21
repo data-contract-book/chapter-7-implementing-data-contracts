@@ -1,0 +1,35 @@
+name: Docker Image CI
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose ls || true
+      - run: docker compose -f docker-compose.yml config
+      - run: docker compose -f docker-compose.yml up --abort-on-container-exit --attach-dependencies
+  
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose ls || true
+      - run: docker compose -f docker-compose.test.yml config
+      - run: docker compose -f docker-compose.test.yml up --abort-on-container-exit --attach-dependencies
+      - name: Comment on PR if data contract violations are detected
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const testOutput = fs.readFileSync('test_output.log', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `❌ Data contract violations detected:\n\n\`\`\`\n${testOutput}\n\`\`\``
+            })
