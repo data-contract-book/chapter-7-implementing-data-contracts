@@ -1,0 +1,65 @@
+{
+    "spec-version": "1.0.0",
+    "name": "object-images-contract-spec",
+    "namespace": "met-museum-data",
+    "dataAssetResourceName": "postgresql://postgres:5432/postgres.object_images",
+    "doc": "Data contract for the object_images table containing image URLs and metadata for museum objects, including primary images, additional images, and creation timestamps.",
+    "owner": {
+      "name": "Data Engineering Team",
+      "email": "data-eng@museum.org"
+    },
+    "schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Object Images Table Schema",
+      "table_catalog": "postgres",
+      "table_schema": "public",
+      "table_name": "object_images",
+      "properties": {
+        "object_id": {
+          "description": "Identifying number for each artwork (unique, can be used as key field)",
+          "examples": [437133],
+          "constraints": {
+            "primaryKey": true,
+            "data_type": "integer",
+            "numeric_precision": 32.0,
+            "is_nullable": false,
+            "is_updatable": true
+          }
+        },
+        "primary_image": {
+          "description": "URL to the primary image of an object (JPEG)",
+          "examples": ["https://images.metmuseum.org/.../DT1234.jpg"],
+          "constraints": {
+            "primaryKey": false,
+            "data_type": "text",
+            "is_nullable": true,
+            "is_updatable": true
+          }
+        },
+        "additional_images": {
+          "description": "Array of URLs to additional JPEG images of the object",
+          "constraints": {
+            "primaryKey": false,
+            "data_type": "ARRAY",
+            "is_nullable": true,
+            "is_updatable": true
+          },
+          "array_element": {
+            "data_type": "text"
+          }
+        },
+        "created_at": {
+          "description": "Timestamp when this record was created in the database",
+          "examples": ["2025-01-15T10:30:00.000Z"],
+          "items": null,
+          "constraints": {
+            "primaryKey": false,
+            "data_type": "timestamp without time zone",
+            "datetime_precision": 6.0,
+            "is_nullable": false,
+            "is_updatable": true
+          }
+        }
+      }
+    }
+  }

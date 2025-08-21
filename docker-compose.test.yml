@@ -1,0 +1,47 @@
+services:
+  devcontainer:
+    image: python:3.12
+    volumes:
+      - .:/workspace:cached
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - app-network
+    working_dir: /workspace
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: bash -c "
+        apt-get update &&
+        apt-get install -y docker.io postgresql-client &&
+        pip install -r /workspace/requirements.txt &&
+        cd /workspace/data_contract_components/data_assets &&
+        alembic upgrade head &&
+        cd /workspace &&
+        python -m unittest data_contract_components/prevention/test_data_contract_violations.py -v > /workspace/test_output.log 2>&1
+      "
+  
+  postgres:
+    image: postgres:17-alpine
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    networks:
+      - app-network
+
+volumes:
+  postgres-data:
+
+networks:
+  app-network:
+    driver: bridge

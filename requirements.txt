@@ -1,0 +1,7 @@
+psycopg[binary]
+psycopg_pool
+alembic
+jupyter
+notebook
+ipykernel
+pandas
