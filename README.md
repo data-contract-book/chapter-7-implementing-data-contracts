@@ -1,5 +1,7 @@
 > [!WARNING]
 > Note: This chapter and code repository is under early preview and may be updated between now and when the complete book is published.
+>
+> Please feel free to [message me directly on LinkedIn](https://www.linkedin.com/in/mafreeman2/) if you have any feedback, as I would love to implement it during our final round of edits!
 
 <div style="clear: both;"></div>
 
