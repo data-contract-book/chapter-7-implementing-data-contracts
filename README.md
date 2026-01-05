@@ -1,3 +1,11 @@
+<div style="clear: both;"></div>
+
+<div style="display: flex; align-items: center;">
+
+<img src=".readme_assets/data_contract_book_cover_early_release.png" style="padding: 0px 20px 10px 10px;">
+
+<div style="flex: 1;">
+
 Welcome to the code repository for the hands-on coding exercise within ***Chapter 7: Implementing Data Contracts***, from the the O'reilly book ***Data Contracts: Developing Production Grade Pipelines at Scale***.
 
 In this repo we will introduce you how to implement the data contract architecture end-to-end using fully open-source tools, as well as walk you through the workflow of handling data contract violations. This is a compliment to the book, but you can also go through this end-to-end with repo alone.
