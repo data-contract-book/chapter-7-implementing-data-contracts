@@ -19,6 +19,3 @@ venv/
 # Docker / container dev
 .env
 .env.*
-
-# IDEs & editors
-.vscode/
